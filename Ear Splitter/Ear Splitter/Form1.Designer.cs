@@ -34,6 +34,7 @@
 			DelayLabel = new Label();
 			DelayUpDown = new NumericUpDown();
 			openFileDialog1 = new OpenFileDialog();
+			AbortButton = new Button();
 			((System.ComponentModel.ISupportInitialize)DelayUpDown).BeginInit();
 			SuspendLayout();
 			// 
@@ -87,11 +88,22 @@
 			// 
 			openFileDialog1.FileName = "openFileDialog1";
 			// 
+			// AbortButton
+			// 
+			AbortButton.Location = new Point(12, 94);
+			AbortButton.Name = "AbortButton";
+			AbortButton.Size = new Size(75, 23);
+			AbortButton.TabIndex = 5;
+			AbortButton.Text = "Abort";
+			AbortButton.UseVisualStyleBackColor = true;
+			AbortButton.Click += AbortButton_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(256, 144);
+			Controls.Add(AbortButton);
 			Controls.Add(DelayUpDown);
 			Controls.Add(DelayLabel);
 			Controls.Add(OnOffLabel);
@@ -112,5 +124,7 @@
 		private Label DelayLabel;
 		private NumericUpDown DelayUpDown;
 		private OpenFileDialog openFileDialog1;
+		private Button button1;
+		private Button AbortButton;
 	}
 }

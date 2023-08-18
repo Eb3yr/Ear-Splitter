@@ -1,20 +1,24 @@
 using System.IO.Packaging;
+using WMPLib;
 
 namespace Ear_Splitter
 {
 	public partial class Form1 : Form
 	{
 		bool cont;
+		List<WMPLib.WindowsMediaPlayer> players;
 		public Form1()
 		{
 			InitializeComponent();
 			cont = false;
+			players = new();
 		}
 
 		private void NukeEarsButton_Click(object sender, EventArgs e)
 		{
 			if (OnOffLabel.Text == "Off")
 			{
+				players.Clear(); //Clear players just before beginning, not at end, so it doesn't interfere with aborting.
 				OnOffLabel.Text = "On";
 				cont = true;
 				NukeEars();
@@ -28,7 +32,6 @@ namespace Ear_Splitter
 
 		private async void NukeEars()
 		{
-			List<WMPLib.WindowsMediaPlayer> players = new();
 			while (cont)
 			{
 				players.Add(new WMPLib.WindowsMediaPlayer { URL = SelectPathButton.Text });
@@ -38,7 +41,6 @@ namespace Ear_Splitter
 					await Task.Delay((int)DelayUpDown.Value);
 				}
 			}
-			players.Clear();
 		}
 
 		private void SelectPathButton_Click(object sender, EventArgs e)
@@ -48,6 +50,24 @@ namespace Ear_Splitter
 			{
 				SelectPathButton.Text = openFileDialog1.FileName;
 			}
+		}
+
+		private void AbortButton_Click(object sender, EventArgs e)
+		{
+			if (OnOffLabel.Text == "On")
+			{
+				OnOffLabel.Text = "Off";
+			}
+			cont = false;
+			try
+			{
+				foreach(var player in players)
+				{
+					player.controls.stop();
+				}
+				players.Clear();
+			}
+			catch(Exception) { }
 		}
 	}
 }
